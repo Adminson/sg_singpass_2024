@@ -9,7 +9,7 @@ var MyInfoConnector = require("myinfo-connector-v4-nodejs");
 const fs = require("fs");
 
 const app = express();
-const port = 3001;
+const port = 13113;
 const config = require("./config/config.js");
 const connector = new MyInfoConnector(config.MYINFO_CONNECTOR_CONFIG);
 
