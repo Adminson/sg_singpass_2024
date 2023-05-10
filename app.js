@@ -35,6 +35,11 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + `/public/index.html`);
 });
 
+//Prithiviraj Perataban Testing
+app.get('/test', (req, res) => {
+  res.send('Hello World!');
+});
+
 // get the environment variables (app info) from the config
 app.get("/getEnv", function (req, res) {
   try {
@@ -93,7 +98,8 @@ app.post("/getPersonData", async function (req, res, next) {
     // get variables from frontend
     var authCode = req.body.authCode;
     //retrieve code verifier from session cache
-    var codeVerifier = sessionIdCache[req.cookies.sid];
+    //var codeVerifier = sessionIdCache[req.cookies.sid];
+    var codeVerifier = req.body.codeVerifier;
     console.log("Calling MyInfo NodeJs Library...".green);
 
     // retrieve private siging key and decode to utf8 from FS
@@ -152,7 +158,8 @@ app.post("/generateCodeChallenge", async function (req, res, next) {
     //establish a frontend session with browser to retrieve back code_verifier
     res.cookie("sid", sessionId);
     //send code code_challenge to frontend to make /authorize call
-    res.status(200).send(pkceCodePair.codeChallenge);
+    //res.status(200).send(pkceCodePair.codeChallenge);
+    res.status(200).send(pkceCodePair);
   } catch (error) {
     console.log("Error".red, error);
     res.status(500).send({
