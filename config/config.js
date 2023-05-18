@@ -83,7 +83,7 @@ let MYINFO_CONNECTOR_CONFIG = {
   USE_PROXY: "N",
   PROXY_TOKEN_URL: "",
   PROXY_PERSON_URL: "",
-  DEBUG_LEVEL: "info"
+  DEBUG_LEVEL: "debug"
 };
 
 
