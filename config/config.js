@@ -79,7 +79,7 @@ let MYINFO_CONNECTOR_CONFIG = {
   MYINFO_JWKS_URL: `https://${urlEnvironmentPrefix}authorise.singpass.gov.sg/.well-known/keys.json`,
   TOKEN_URL: `https://${urlEnvironmentPrefix}api.myinfo.gov.sg/com/v4/token`,
   PERSON_URL: `https://${urlEnvironmentPrefix}api.myinfo.gov.sg/com/v4/person`,
-  CLIENT_ASSERTION_SIGNING_KID :'https://stage2022.boardroomlimited.my/document/key/keys.json', // optional parameter to specify specific kid for signing. Default will be thumbprint of JWK
+  CLIENT_ASSERTION_SIGNING_KID :'', // optional parameter to specify specific kid for signing. Default will be thumbprint of JWK
   USE_PROXY: "N",
   PROXY_TOKEN_URL: "",
   PROXY_PERSON_URL: "",
