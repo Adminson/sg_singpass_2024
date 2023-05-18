@@ -9,14 +9,13 @@ var MyInfoConnector = require("myinfo-connector-v4-nodejs");
 const fs = require("fs");
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = 3002;
 const config = require("./config/config.js");
 const connector = new MyInfoConnector(config.MYINFO_CONNECTOR_CONFIG);
 
 var sessionIdCache = {};
 
 app.use(express.json());
-app.use(cors());
 
 app.set("views", path.join(__dirname, "public/views"));
 app.set("view engine", "pug");
@@ -96,11 +95,12 @@ function readFiles(dirname, onFileContent, onError) {
 app.post("/getPersonData", async function (req, res, next) {
   try {
     // get variables from frontend
+    console.log('req',req)
     var authCode = req.body.authCode;
-    //retrieve code verifier from session cache
-    //var codeVerifier = sessionIdCache[req.cookies.sid];
     var codeVerifier = req.body.codeVerifier;
-    console.log("Calling MyInfo NodeJs Library...".green);
+    //retrieve code verifier from session cache
+    // var codeVerifier = sessionIdCache[req.cookies.sid];
+    console.log("1 Calling MyInfo NodeJs Library...".green);
 
     // retrieve private siging key and decode to utf8 from FS
     let privateSigningKey = fs.readFileSync(
@@ -119,7 +119,7 @@ app.post("/getPersonData", async function (req, res, next) {
         throw err;
       }
     );
-
+    console.log('can read singing key?')
     //call myinfo connector to retrieve data
     let personData = await connector.getMyInfoPersonData(
       authCode,
@@ -127,7 +127,7 @@ app.post("/getPersonData", async function (req, res, next) {
       privateSigningKey,
       privateEncryptionKeys
     );
-
+    console.log('raj personData',personData)
     /* 
       P/s: Your logic to handle the person data ...
     */
@@ -158,8 +158,15 @@ app.post("/generateCodeChallenge", async function (req, res, next) {
     //establish a frontend session with browser to retrieve back code_verifier
     res.cookie("sid", sessionId);
     //send code code_challenge to frontend to make /authorize call
-    //res.status(200).send(pkceCodePair.codeChallenge);
     res.status(200).send(pkceCodePair);
+      //  res.status(200).send({
+      //   clientId: config.APP_CONFIG.DEMO_APP_CLIENT_ID,
+      //   redirectUrl: config.APP_CONFIG.DEMO_APP_CALLBACK_URL,
+      //   scope: config.APP_CONFIG.DEMO_APP_SCOPES,
+      //   purpose_id: config.APP_CONFIG.DEMO_APP_PURPOSE_ID,
+      //   authApiUrl: config.APP_CONFIG.MYINFO_API_AUTHORIZE,
+      //   subentity: config.APP_CONFIG.DEMO_APP_SUBENTITY_ID,
+      // });
   } catch (error) {
     console.log("Error".red, error);
     res.status(500).send({
