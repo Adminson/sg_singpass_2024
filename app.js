@@ -122,6 +122,8 @@ app.post("/getPersonData", async function (req, res, next) {
       }
     );
     console.log('can read singing key?')
+    console.log('can read privateSigningKey?',privateSigningKey)
+    console.log('can read privateEncryptionKeys?',privateEncryptionKeys)
     //call myinfo connector to retrieve data
     let personData = await connector.getMyInfoPersonData(
       authCode,
