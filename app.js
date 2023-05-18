@@ -100,6 +100,8 @@ app.post("/getPersonData", async function (req, res, next) {
     var codeVerifier = req.body.codeVerifier;
     //retrieve code verifier from session cache
     // var codeVerifier = sessionIdCache[req.cookies.sid];
+    console.log("authCode",authCode);
+    console.log("codeVerifier",codeVerifier);
     console.log("1 Calling MyInfo NodeJs Library...".green);
 
     // retrieve private siging key and decode to utf8 from FS
